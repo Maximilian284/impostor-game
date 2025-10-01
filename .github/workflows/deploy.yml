@@ -31,4 +31,4 @@ jobs:
           folder: dist                # cartella che contiene i file buildati
           repository-name: Maximilian284/Maximilian284.github.io
           target-folder: impostor_game
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAGES_TOKEN }}
