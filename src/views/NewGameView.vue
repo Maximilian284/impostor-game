@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800">
+  <div class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800 overflow-hidden">
     
   </div>
 </template>
