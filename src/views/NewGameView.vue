@@ -8,9 +8,9 @@ import IconClock from '@/components/icons/IconClock.vue'
 import IconCards from '@/components/icons/IconCards.vue'
 import IconPlusFilledCircle from '@/components/icons/IconPlusFilledCircle.vue'
 import IconTrash from '@/components/icons/IconTrash.vue'
-import { ref, watch } from 'vue'
+import { ref, watch, reactive } from 'vue'
 
-const players = ref(["Giocatore 1", "Giocatore 2", "Giocatore 3", "Giocatore 4"])
+const players = reactive(["Giocatore 1", "Giocatore 2", "Giocatore 3", "Giocatore 4"])
 const impostors = ref(1)
 const duration = ref(4)
 const packets = ref(1)
@@ -19,11 +19,11 @@ const showModalPlayers = ref(false)
 const showModalPackets = ref(false)
 
 function addPlayer() {
-  players.value.push(`Giocatore ${players.value.length + 1}`)
+  players.push(`Giocatore ${players.length + 1}`)
 }
 
 function changeImpostors(n: number) {
-  if (impostors.value + n >= 1 && impostors.value + n < players.value.length) {
+  if (impostors.value + n >= 1 && impostors.value + n < players.length) {
     impostors.value += n
   } 
 }
@@ -43,7 +43,11 @@ function switchVar(varName: string) {
 }
 
 watch(players, () => {
-  duration.value = players.value.length + 1
+  duration.value = players.length + 1
+
+  if (impostors.value >= players.length) {
+    impostors.value = players.length - 1
+  }
 })
 </script>
 
@@ -102,7 +106,7 @@ watch(players, () => {
       <div v-show="showModalPlayers" class="z-10 w-screen h-[calc(100vh-12rem)] absolute bottom-0 left-0 bg-neutral-800 rounded-t-2xl border-t-2 border-neutral-600 flex flex-col">
         <div class="shrink-0 flex flex-col items-center">
           <IconPlayers class="inline w-10 h-10 mt-2.5 fill-neutral-200"/>
-          <p class="mt-2 mb-7 text-neutral-200 text-3xl">Aggiungi giocatori</p>
+          <p class="mt-2 mb-5 text-neutral-200 text-3xl">Aggiungi giocatori</p>
         </div>
         <div class="flex-1 overflow-y-auto px-6">
           <div v-for="(player, index) in players" :key="index" class="bg-neutral-700 rounded-2xl px-6 pt-4 pb-3 mb-4 flex items-center justify-between">
@@ -110,9 +114,9 @@ watch(players, () => {
               <p class="text-neutral-200">Giocatore {{ index + 1 }}</p>
               <input v-model="players[index]" type="text" class="bg-neutral-700 text-neutral-200 text-xl rounded-lg mt-1 focus:outline-none" placeholder="Nome"/>
             </div>
-           <IconTrash @click="players.splice(index, 1)" class="inline w-6 h-6 fill-red-700 mb-1 cursor-pointer"/>
+           <IconTrash @click="players.length > 3 && players.splice(index, 1)" class="inline w-6 h-6 fill-red-700 mb-1 cursor-pointer"/>
           </div>
-          <button @click="addPlayer" class="flex items-center border-2 text-red-700 px-4 pt-2 pb-1.5 rounded-2xl text-xl font-semibold mt-2 mb-6 mx-auto">
+          <button @click="addPlayer" class="flex items-center border-2 text-red-700 px-4 pt-2 pb-1.5 rounded-2xl text-xl font-semibold mt-6 mb-6 mx-auto">
             <IconPlusFilledCircle class="inline w-5 h-5 fill-red-700 mb-0.5 mr-1.5"/>
             <p>Aggiungi giocatore</p>
           </button>
