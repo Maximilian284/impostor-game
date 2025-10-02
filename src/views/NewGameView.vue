@@ -98,26 +98,44 @@ watch(players, () => {
     </div>
 
     <!-- Modal Players -->
-    <div :class="showModalPlayers ? 'translate-y-0' : 'translate-y-full'" class="z-10 w-screen h-[calc(100vh-12rem)] absolute bottom-0 left-0 bg-neutral-800 rounded-t-2xl border-t-2 border-neutral-600 transition-transform duration-[400ms] overflow-auto" >
-      <div class="flex flex-col items-center">
-        <IconPlayers class="inline w-10 h-10 mt-2.5 fill-neutral-200"/>
-        <p class="mt-2 mb-7 text-neutral-200 text-3xl">Aggiungi giocatori</p>
-        <div v-for="(player, index) in players" class="bg-neutral-700 rounded-2xl px-6 pt-4 pb-3 mb-4 w-[calc(100vw-4rem)] flex items-center justify-between">
-          <div>
-            <p class="text-neutral-200">Giocatore {{ index + 1 }}</p>
-            <input v-model="players[index]" type="text" class="bg-neutral-700 text-neutral-200 text-xl rounded-lg mt-1 focus:outline-none" placeholder="Nome"/>
-          </div>
-         <IconTrash @click="players.splice(index, 1)" class="inline w-6 h-6 fill-red-700 mb-1 cursor-pointer"/>
+    <Transition name="slide-up">
+      <div v-show="showModalPlayers" class="z-10 w-screen h-[calc(100vh-12rem)] absolute bottom-0 left-0 bg-neutral-800 rounded-t-2xl border-t-2 border-neutral-600 flex flex-col">
+        <div class="shrink-0 flex flex-col items-center">
+          <IconPlayers class="inline w-10 h-10 mt-2.5 fill-neutral-200"/>
+          <p class="mt-2 mb-7 text-neutral-200 text-3xl">Aggiungi giocatori</p>
         </div>
-        <button @click="addPlayer" class="flex items-center border-2 text-red-700 px-4 pt-2 pb-1.5 rounded-2xl text-xl font-semibold mt-2 mb-6">
-          <IconPlusFilledCircle class="inline w-5 h-5 fill-red-700 mb-0.5 mr-1.5"/>
-          <p >Aggiungi giocatore</p>
-        </button>
+        <div class="flex-1 overflow-y-auto px-6">
+          <div v-for="(player, index) in players" :key="index" class="bg-neutral-700 rounded-2xl px-6 pt-4 pb-3 mb-4 flex items-center justify-between">
+            <div>
+              <p class="text-neutral-200">Giocatore {{ index + 1 }}</p>
+              <input v-model="players[index]" type="text" class="bg-neutral-700 text-neutral-200 text-xl rounded-lg mt-1 focus:outline-none" placeholder="Nome"/>
+            </div>
+           <IconTrash @click="players.splice(index, 1)" class="inline w-6 h-6 fill-red-700 mb-1 cursor-pointer"/>
+          </div>
+          <button @click="addPlayer" class="flex items-center border-2 text-red-700 px-4 pt-2 pb-1.5 rounded-2xl text-xl font-semibold mt-2 mb-6 mx-auto">
+            <IconPlusFilledCircle class="inline w-5 h-5 fill-red-700 mb-0.5 mr-1.5"/>
+            <p>Aggiungi giocatore</p>
+          </button>
+        </div>
       </div>
-    </div>
+    </Transition>
     <div v-if="showModalPlayers" @click="switchVar('players')" class="fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300"></div>
   
     <!-- Modal Packets -->
   </div>
 </template>
 
+<style>
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: transform 0.4s ease;
+}
+.slide-up-enter-from,
+.slide-up-leave-to {
+  transform: translateY(100%);
+}
+.slide-up-enter-to,
+.slide-up-leave-from {
+  transform: translateY(0);
+}
+</style>
