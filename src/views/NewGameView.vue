@@ -119,13 +119,13 @@ watch(players, () => {
         </div>
       </div>
     </Transition>
-    <div v-if="showModalPlayers" @click="switchVar('players')" class="fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300"></div>
+    <div v-if="showModalPlayers" @click="switchVar('players')" @touchmove.prevent class="fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300"></div>
   
     <!-- Modal Packets -->
   </div>
 </template>
 
-<style>
+<style scoped>
 .slide-up-enter-active,
 .slide-up-leave-active {
   transition: transform 0.4s ease;
