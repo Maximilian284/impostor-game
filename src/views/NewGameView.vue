@@ -8,17 +8,19 @@ import IconClock from '@/components/icons/IconClock.vue'
 import IconCards from '@/components/icons/IconCards.vue'
 import IconPlusFilledCircle from '@/components/icons/IconPlusFilledCircle.vue'
 import IconTrash from '@/components/icons/IconTrash.vue'
+import IconHint from '@/components/icons/IconHint.vue'
 import { ref, watch, reactive, computed } from 'vue'
-import { useCounterStore } from '@/stores'
+import { useStore } from '@/stores'
 import { goToPage } from '@/router/navigation'
 
-const store = useCounterStore()
+const store = useStore()
 const packetsAvailable = store.packets
 
 type ModalKeys = 'players' | 'duration' | 'packets'
 
 const players = reactive(["Giocatore 1", "Giocatore 2", "Giocatore 3", "Giocatore 4"])
 const impostors = ref(1)
+const hint = ref(true)
 const duration = ref(4)
 const packets = computed(() =>
   Object.values(packetsAvailable).filter(packet => packet.selected).length
@@ -85,7 +87,14 @@ watch(players, () => {
 
 // Start Game function
 function startGame() {
-  // TODO: Ensure at least one packet is selected and other conditions 
+  store.currentGame = {
+    players: [...players],
+    impostors: impostors.value,
+    duration: duration.value,
+    hint: hint.value,
+    packets: Object.values(packetsAvailable ?? {}).filter(packet => packet.selected),
+  }
+
   goToPage('game')
 }
 
@@ -184,13 +193,13 @@ function togglePacket(packet: { name: string, selected: boolean }) {
 <template>
   <div class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800 overflow-hidden">
     <!-- View Title -->
-    <p class="text-red-700 font-extrabold text-6xl mb-16 -mt-[2rem]">IMPOSTORE</p>
+    <p class="text-red-700 font-extrabold text-6xl mb-16 -mt-7">IMPOSTORE</p>
 
     <!-- Options -->
     <div class="w-[calc(100%-4rem)]">
 
       <!-- Players option -->
-      <button @click="switchVar('players')" class="w-full bg-neutral-700 text-neutral-200 pt-4 pb-3 border-b-2 rounded-t-2xl border-neutral-600 text-2xl font-semibold text-left flex pl-6"> 
+      <button @click="switchVar('players')" class="w-full bg-neutral-700 text-neutral-200 pt-4 pb-3 border-b-2 rounded-t-2xl border-neutral-600 text-2xl font-semibold text-left flex pl-5"> 
         <IconPlayers class="inline w-6 h-6 mr-3 mt-0.5 fill-neutral-200"/>
         Giocatori
         <div class="ml-auto flex items-center text-xl pr-2">
@@ -200,7 +209,7 @@ function togglePacket(packet: { name: string, selected: boolean }) {
       </button>
 
       <!-- Impostors option -->
-      <button class="w-full bg-neutral-700 text-neutral-200 pt-4 pb-3 border-b-2 border-neutral-600 text-2xl font-semibold text-left flex pl-6"> 
+      <button class="w-full bg-neutral-700 text-neutral-200 pt-4 pb-3 border-b-2 border-neutral-600 text-2xl font-semibold text-left flex pl-5"> 
         <IconSpy class="inline w-6 h-6 mr-3 mt-1 fill-neutral-200"/>
         Impostori
         <div class="ml-auto flex items-center text-xl pr-2">
@@ -210,9 +219,20 @@ function togglePacket(packet: { name: string, selected: boolean }) {
         </div>
       </button>
 
+      <!-- Suggerimento option -->
+      <button class="w-full bg-neutral-700 text-neutral-200 pt-4 pb-3 border-b-2 border-neutral-600 text-2xl font-semibold text-left flex pl-5 items-center">
+        <IconHint class="inline w-6 h-6 mr-3 -mt-1 fill-neutral-200"/>
+        Suggerimento
+        <div class="ml-auto pr-3.5">
+          <div class="w-13 h-7 rounded-full relative cursor-pointer transition-colors duration-300" :class="hint ? 'bg-red-500/20' : 'bg-neutral-600'" @click="hint = !hint">
+            <div class="w-5 h-5 rounded-full absolute top-1 transition-all duration-300" :class="hint ? 'bg-red-500 left-[calc(100%-24px)]' : 'bg-neutral-400 left-1'"></div>
+          </div>
+        </div>
+      </button>
+
       <!-- Packets option -->
-      <button @click="switchVar('packets')" class="w-full bg-neutral-700 text-neutral-200 pt-4 pb-3 border-b-2 border-neutral-600 text-2xl font-semibold text-left flex pl-6"> 
-        <IconCards class="inline w-6 h-6 mr-3 mt-1 fill-neutral-200"/>
+      <button @click="switchVar('packets')" class="w-full bg-neutral-700 text-neutral-200 pt-4 pb-3 border-b-2 border-neutral-600 text-2xl font-semibold text-left flex pl-5"> 
+        <IconCards class="inline w-6 h-6 mr-3 mt-0.5 fill-neutral-200"/>
         Pacchetti
         <div class="ml-auto flex items-center text-xl pr-2">
           <p class="pt-1">{{ packets }} pac.</p>
@@ -221,7 +241,7 @@ function togglePacket(packet: { name: string, selected: boolean }) {
       </button>
 
       <!-- Duration option -->
-      <button @click="switchVar('duration')" class="w-full bg-neutral-700 text-neutral-200 pt-4 pb-3 rounded-b-2xl text-2xl font-semibold text-left flex pl-6"> 
+      <button @click="switchVar('duration')" class="w-full bg-neutral-700 text-neutral-200 pt-4 pb-3 rounded-b-2xl text-2xl font-semibold text-left flex pl-5"> 
         <IconClock class="inline w-6 h-6 mr-3 mt-0.5 fill-neutral-200"/>
         Durata
         <div class="ml-auto flex items-center text-xl pr-2">
@@ -327,7 +347,7 @@ function togglePacket(packet: { name: string, selected: boolean }) {
 <style scoped>
 .slide-up-enter-active,
 .slide-up-leave-active {
-  transition: transform 0.4s ease;
+  transition: transform 0.575s ease;
 }
 .slide-up-enter-from,
 .slide-up-leave-to {
