@@ -206,7 +206,7 @@ function togglePacket(packet: { name: string, selected: boolean }) {
         <div class="ml-auto flex items-center text-xl pr-2">
           <IconPlusCircle class="inline w-6 h-6 mr-3 fill-neutral-200" @click="changeImpostors(1)"/>
           <p class="pt-1">{{ impostors }}</p>
-          <IconMinusCircle class="inline w-6 h-6 ml-3 fill-neutral-200" @click="changeImpostors(-1)"/>
+          <IconMinusCircle class="inline w-6 h-6 ml-3 mr-2 fill-neutral-200" @click="changeImpostors(-1)"/>
         </div>
       </button>
 
