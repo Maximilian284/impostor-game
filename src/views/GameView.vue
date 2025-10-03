@@ -157,7 +157,7 @@ function onDrag(event: TouchEvent) {
   hasDraggedOnce.value = true
 
   const cover = event.currentTarget as HTMLElement
-  const maxTranslate = cover.offsetHeight * 0.9
+  const maxTranslate = cover.offsetHeight * 0.85
   cover.style.transform = `translateY(-${Math.min(currentY, maxTranslate)}px)`
 }
 
@@ -209,14 +209,14 @@ function endDrag() {
       <h2 class="text-neutral-200 text-4xl font-bold mb-10 text-center">{{ playerList[currentIndex]?.name }}</h2>
 
       <div class="relative w-[calc(100%-4rem)] h-[calc(45vh)]">
-        <div class="bg-neutral-700 rounded-4xl shadow-lg w-full h-full flex items-center justify-center text-center text-lg text-neutral-200">
-          <div v-if="playerList[currentIndex]?.impostor">
-            <p class="font-bold text-red-500">IMPOSTORE</p>
-            <p>{{ chosenWord?.hint.join('') }}</p>
-          </div>
-          <div v-else>
-            <p class="font-bold text-green-500">GIOCATORE</p>
-            <p>{{ chosenWord?.word }}</p>
+        <div class="bg-neutral-700 rounded-4xl shadow-xl w-full h-full flex items-center justify-center text-center text-lg text-neutral-200 pt-10">
+          <div>
+            <p :class="['font-bold text-3xl', playerList[currentIndex]?.impostor ? 'text-red-500' : 'text-green-500']">
+              {{ playerList[currentIndex]?.impostor ? 'IMPOSTORE' : 'ALLEATO' }}
+            </p>
+            <p class="text-2xl pt-2">
+              {{ playerList[currentIndex]?.impostor ? chosenWord?.hint.join(', ') : chosenWord?.word }}
+            </p>
           </div>
         </div>
 
