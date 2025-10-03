@@ -1,4 +1,4 @@
-<!-- Alcune icone di material design https://pictogrammers.com/library/mdi/ -->
+<!-- Some icons from material design https://pictogrammers.com/library/mdi/ -->
 <template>
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <title>account-group</title>

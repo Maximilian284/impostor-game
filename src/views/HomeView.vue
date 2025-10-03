@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import ButtonHome from '../components/ButtonHome.vue'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-
-function goToPage(page: string) {
-  router.push({ name: page })
-}
+import { goToPage } from '@/router/navigation'
 </script>
 
 <template>
