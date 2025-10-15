@@ -198,7 +198,7 @@ function endDrag() {
     <IconHelp class="w-9 h-9 fill-neutral-200/20 absolute rounded-full border-2 border-neutral-200/20 mt-7 right-[21px] p-1"/>
     <div v-if="isDiscussion" class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800 p-6 space-y-6">
       <h2 v-if="!discussionEnded" class="text-neutral-200 text-5xl font-bold mb-4 -mt-[12vh] text-center">DISCUSSIONE</h2>
-      <p class="text-neutral-200 font-semibold text-2xl mb-20">Inizia {{ shuffleArray(playerList.filter(player => !player.impostor))[0]?.name }} </p>
+      <p v-if="!discussionEnded" class="text-neutral-200 font-semibold text-2xl mb-20">Inizia {{ shuffleArray(playerList.filter(player => !player.impostor))[0]?.name }} </p>
       <div v-if="!discussionEnded" class="flex items-center justify-center mb-8">
           <TimerDigit :value="Math.floor(discussionTime / 60 / 10)" />
           <TimerDigit :value="Math.floor(discussionTime / 60) % 10" />

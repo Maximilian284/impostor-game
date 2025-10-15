@@ -1,7 +1,7 @@
 # Gioco dell'Impostore
 
 ## Descrizione
-Il **Gioco dell'Impostore** è l'ennesima gioco dell’impostore, basata su parole e indizi. L’obiettivo è scoprire chi è l’impostore tra i partecipanti, utilizzando suggerimenti e deduzioni linguistiche.
+Il **Gioco dell'Impostore** è l'ennesima gioco dell’impostore, basata su parole e indizi. Pensato esclusivamente per dispositivi mobile. L’obiettivo è scoprire chi è l’impostore tra i partecipanti, utilizzando suggerimenti e deduzioni linguistiche.
 
 ## Tecnologie utilizzate
 - **Vue.js**: per la costruzione di un’interfaccia reattiva e dinamica.
@@ -10,7 +10,7 @@ Il **Gioco dell'Impostore** è l'ennesima gioco dell’impostore, basata su paro
 - **Pinia**: per la gestione dello stato globale dell’applicazione.
 
 ## Gioca subito!
-Prova il gioco direttamente online visitando il sito:  
+Prova il gioco direttamente online visitando il sito (si sconsiglia la visualizzazione su PC):  
 [https://maximilian284.github.io/impostor_game](https://maximilian284.github.io/impostor_game)
 
 ## Come si gioca
