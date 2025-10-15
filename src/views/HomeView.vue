@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ButtonHome from '../components/ButtonHome.vue'
+import ButtonHome from '@/components/ButtonHome.vue'
 import { goToPage } from '@/router/navigation'
 </script>
 
