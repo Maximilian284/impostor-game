@@ -17,25 +17,54 @@ export const useStore = defineStore('store', () => {
       name: 'Luoghi',
       selected: true,
       items: [
-        { word: 'Parco', hint: ['Cane', 'Giostra'] },
-        { word: 'Hotel', hint: ['Dormire', 'Chiave'] },
-        { word: 'Cinema', hint: ['Biglietto', 'Schermo'] },
-        { word: 'Supermercato', hint: ['Scontrino', 'Frigorifero'] },
-        { word: 'Scuola', hint: ['Libri', 'Astuccio'] },
-        { word: 'Spiaggia', hint: ['Sabbia', 'Acqua'] },
-        { word: 'Museo', hint: ['Quadro', 'Guida'] },
-        { word: 'Stazione', hint: ['Partenza', 'Annuncio'] },
-        { word: 'Aeroporto', hint: ['Controlli', 'Liquidi'] },
+        { word: 'Parco', hint: ['Terra', 'Verde'] },
+        { word: 'Hotel', hint: ['Dormire', 'Sedia'] }, // migliorare dormire
+        { word: 'Cinema', hint: ['Biglietto', 'Rumore'] },
+        { word: 'Supermercato', hint: ['Scontrino', 'Zucchero'] },
+        { word: 'Mare', hint: ['Costume', 'Medusa'] },
+        { word: 'Museo', hint: ['Sedia', 'Guida'] }, 
+        { word: 'Stazione', hint: ['Partenza', 'Annuncio'] }, // aggiungere parola con annuncio
+        { word: 'Aeroporto', hint: ['Partenza', 'Sicurezza'] },
         { word: 'Acquario', hint: ['Vasca', 'Medusa'] },
-        { word: 'Zoo', hint: ['Gabbia', 'Serra'] },
-        { word: 'Stadio', hint: ['Erba', 'Cori'] },
-        { word: 'Palestra', hint: ['Peso', 'Sudore'] },
-        { word: 'Forno', hint: ['Farina', 'Zucchero'] },
-        { word: 'Macelleria', hint: ['Coltello', 'Frigo'] },
-        { word: 'Ristorante', hint: ['Bicchiere', 'Piatto'] },
-        { word: 'Teatro', hint: ['Costumi', 'Canto'] },
-        { word: 'Ospedale', hint: ['Medicine', 'Igiene'] },
-        { word: 'Fiorista', hint: ['Vaso', 'Verde'] },
+        { word: 'Zoo', hint: ['Gabbia', 'Guida'] },
+        { word: 'Piscina', hint: ['Vasca', 'Costume']},
+        { word: 'Stadio', hint: ['Verde', 'Rumore'] },
+        { word: 'Palestra', hint: ['Specchio'] }, // completare
+        { word: 'Forno', hint: ['Zucchero'] }, // completare
+        { word: 'Macelleria', hint: ['Coltello', 'Sangue'] },
+        { word: 'Bar', hint: ['Zucchero', 'Scontrino'] },
+        { word: 'Teatro', hint: ['Biglietto', 'Canto'] },
+        { word: 'Ospedale', hint: ['Igiene'] }, // completare
+        { word: 'Bagno', hint: ['Igiene', 'Specchio']},
+        { word: 'Fiorista', hint: ['Terra', 'Verde'] },
+        { word: 'Chiesa', hint: ['Canto' ]}, // completare
+        { word: 'Obitorio', hint: ['Coltello', 'Sangue']},
+        { word: 'Prigione', hint: ['Sicurezza', 'Gabbia']}
+      ]
+    },
+    attivita_eventi: {
+      name: 'Attività ed Eventi',
+      selected: false,
+      items: [
+        { word: 'Viaggio', hint: ['Valigia', 'Treno'] },
+        { word: 'Festa', hint: ['Musica', 'Torta'] },
+        { word: 'Lavoro', hint: ['Ufficio', 'Colleghi'] },
+        { word: 'Cena', hint: ['Forchetta', 'Ristorante'] },
+        { word: 'Concerto', hint: ['Palco', 'Cantante'] },
+        { word: 'Gara', hint: ['Premio', 'Sfida'] },
+        { word: 'Vacanza', hint: ['Hotel', 'Relax'] },
+        { word: 'Allenamento', hint: ['Palestra', 'Sudore'] },
+        { word: 'Esame', hint: ['Studio', 'Ansia'] },
+        { word: 'Riunione', hint: ['Agenda', 'Parlare'] },
+        { word: 'Matrimonio', hint: ['Abito', 'Fedi'] },
+        { word: 'Spettacolo', hint: ['Pubblico', 'Applausi'] },
+        { word: 'Lezione', hint: ['Professore', 'Lavagna'] },
+        { word: 'Uscita', hint: ['Amici', 'Sera'] },
+        { word: 'Passeggiata', hint: ['Scarpe', 'Strada'] },
+        { word: 'Picnic', hint: ['Coperta', 'Cibo'] },
+        { word: 'Riposo', hint: ['Letto', 'Silenzio'] },
+        { word: 'Colloquio', hint: ['Domande', 'Curriculum'] },
+        { word: 'Spesa', hint: ['Carrello', 'Supermercato'] }
       ]
     }
   })

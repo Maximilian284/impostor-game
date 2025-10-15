@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import IconArrowUp from '@/components/icons/IconArrowUp.vue'
+import IconClose from '@/components/icons/IconClose.vue'
+import IconHelp from '@/components/icons/IconHelp.vue'
 import { ref, onMounted } from 'vue'
 import { useStore } from '@/stores'
 import { goToPage } from '@/router/navigation'
+
+const isModalActive = ref(false)
 
 const currentGame = useStore().currentGame
 
@@ -17,6 +21,7 @@ onMounted(() => {
 })
 
 const impostorsCount = currentGame?.impostors ?? 0
+const hint = currentGame?.hint 
 const duration = currentGame?.duration
 const packets = currentGame?.packets
 
@@ -36,11 +41,11 @@ const hasDraggedOnce = ref(false)
 
 // Discussion phase logic
 const isDiscussion = ref(false)
+const isTimerStarted = ref(false)
 const discussionTime = ref((duration ?? 1) * 60)
 let timer: number | undefined = undefined
 const discussionEnded = ref(false)
 
-import { ref as vueRef } from 'vue'
 let chosenWord = ref<{ word: string; hint: string[] } | null>(null)
 
 function initializeGame() {
@@ -84,6 +89,7 @@ function initializeGame() {
   showNextButton.value = false
   hasDraggedOnce.value = false
   isDiscussion.value = false
+  isTimerStarted.value = false
   discussionEnded.value = false
   discussionTime.value = (duration ?? 1) * 60
 }
@@ -98,11 +104,11 @@ function nextPlayer() {
   } else {
     // Last player starts discussion
     isDiscussion.value = true
-    startDiscussionTimer()
   }
 }
 
 function startDiscussionTimer() {
+  isTimerStarted.value = true
   let timeLeft = discussionTime.value
   timer = window.setInterval(() => {
     timeLeft--
@@ -186,6 +192,8 @@ function endDrag() {
 
 <template>
   <div>
+    <IconClose class="w-8 h-8 stroke-2 fill-neutral-200 absolute rounded-full border-2 border-neutral-200 mt-6 ml-5 p-0.5" @click="isModalActive = true"/>
+    <IconHelp class="w-8 h-8 fill-neutral-200/20 absolute rounded-full border-2 border-neutral-200/20 mt-6 right-5 p-1"/>
     <div v-if="isDiscussion" class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800 p-6 space-y-6">
       <h2 v-if="!discussionEnded" class="text-neutral-200 text-4xl font-bold mb-10 text-center">Discussione</h2>
       <p v-if="!discussionEnded" class="text-neutral-200 text-2xl mb-8">
@@ -193,8 +201,11 @@ function endDrag() {
       </p>
       
       <div v-if="!discussionEnded" class="w-[calc(100%-4rem)] flex flex-col items-center space-y-4">
-        <button class="w-full bg-red-700 text-neutral-200 pt-4 pb-3 rounded-2xl text-2xl font-semibold" @click="endDiscussion">
-          Vota
+        <button v-if="isTimerStarted" class="w-full bg-red-700 text-neutral-200 pt-4 pb-3 rounded-2xl text-2xl font-semibold" @click="endDiscussion">
+          Vota!
+        </button>
+        <button v-else class="w-full bg-red-700 text-neutral-200 pt-4 pb-3 rounded-2xl text-2xl font-semibold" @click="startDiscussionTimer">
+          Inizia!
         </button>
       </div>
 
@@ -215,7 +226,7 @@ function endDrag() {
               {{ playerList[currentIndex]?.impostor ? 'IMPOSTORE' : 'ALLEATO' }}
             </p>
             <p class="text-2xl pt-2">
-              {{ playerList[currentIndex]?.impostor ? chosenWord?.hint.join(', ') : chosenWord?.word }}
+              {{ playerList[currentIndex]?.impostor ?  hint ? chosenWord?.hint.join(', ') : 'Non farti scoprire!' : chosenWord?.word }}
             </p>
           </div>
         </div>
@@ -240,6 +251,35 @@ function endDrag() {
           {{ currentIndex >= playerList.length - 1 ? 'Gioca' : 'Prossimo Giocatore' }}
         </button>
         <div v-else class="w-full h-full"></div>
+      </div>
+    </div>
+
+    <div v-if="isModalActive" @touchstart.prevent class="fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300"></div>
+    <div v-if="isModalActive" class="fixed inset-0 z-30 w-screen overflow-y-auto text-neutral-200">
+      <div class="flex min-h-full items-center justify-center p-5 text-center sm:p-0">
+        <div class="relative transform overflow-hidden rounded-2xl text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+          <div class="select-none bg-neutral-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start">
+              <div class="mx-auto flex size-11 shrink-0 items-center justify-center rounded-full bg-red-300 sm:mx-0 sm:size-10">
+                <IconClose class="w-8 h-8 fill-red-700"/>
+              </div>
+              <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                <h3 class="text-2xl font-semibold" id="modal-title">Termina la partita</h3>
+                <div class="mt-2">
+                  <p class="text-lg" style="white-space: pre-line">Sei sicuro di voler terminare la partita?</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-full bg-neutral-800 px-6 py-4 pb-5 flex justify-between gap-3">
+            <button type="button" class="flex-1 inline-flex justify-center rounded-lg px-3 py-2 text-lg font-semibold ring-1 ring-inset ring-neutral-200 bg-neutral-200/20" @click="isModalActive = false">
+              Annulla
+            </button>
+            <button type="button" class="flex-1 inline-flex justify-center rounded-lg px-3 py-2 text-lg font-semibold ring-1 ring-inset ring-red-300 text-red-500 bg-red-300/20" @click="goToPage('newGame')">
+              Termina
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

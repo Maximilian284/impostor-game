@@ -8,7 +8,7 @@ import { goToPage } from '@/router/navigation'
     <p class="text-red-700 font-extrabold text-6xl mb-20 -mt-[12vh]">IMPOSTORE</p>
     <div class="grid grid-cols-1 gap-y-6">
       <ButtonHome buttonText="Nuova Partita" @click="goToPage('newGame')"/>
-      <ButtonHome buttonText="Impostazioni"/>
+      <ButtonHome buttonText="Come Giocare" @click="goToPage('howToPlay')"/>
     </div>
   </div>
 </template>

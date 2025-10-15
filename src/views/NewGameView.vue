@@ -213,9 +213,9 @@ function togglePacket(packet: { name: string, selected: boolean }) {
         <IconSpy class="inline w-6 h-6 mr-3 mt-1 fill-neutral-200"/>
         Impostori
         <div class="ml-auto flex items-center text-xl pr-2">
-          <IconPlusCircle class="inline w-6 h-6 mr-3 fill-neutral-200" @click="changeImpostors(1)"/>
+          <IconPlusCircle class="inline w-[26px] h-[26px] mr-3 fill-neutral-200" @click="changeImpostors(1)"/>
           <p class="pt-1">{{ impostors }}</p>
-          <IconMinusCircle class="inline w-6 h-6 ml-3 mr-2 fill-neutral-200" @click="changeImpostors(-1)"/>
+          <IconMinusCircle class="inline w-[26px] h-[26px] ml-3 mr-2 fill-neutral-200" @click="changeImpostors(-1)"/>
         </div>
       </button>
 
@@ -301,9 +301,9 @@ function togglePacket(packet: { name: string, selected: boolean }) {
           <p class="mt-2 mb-5 text-neutral-200 text-3xl">Pacchetti</p>
         </div>
         <div class="grid grid-cols-2 overflow-y-auto px-6">
-          <div v-for="(packet, index) in packetsAvailable" :key="index" class="bg-neutral-700 rounded-2xl px-6 pt-4 pb-3 m-2 flex items-center justify-between cursor-pointer" >
+          <div v-for="(packet, index) in packetsAvailable" :key="index" class="bg-neutral-700 rounded-2xl px-6 gap-0.5 pt-4 pb-3 m-2 flex items-center justify-between cursor-pointer" >
             <p class="text-neutral-200 text-xl">{{ packet.name }}</p>
-            <input type="checkbox" :checked="packet.selected" @change="togglePacket(packet)" class="w-6 h-6 mb-1 rounded-full cursor-pointer appearance-none border-2 border-red-700 transition-colors duration-200" :class="packet.selected ? 'bg-red-700' : 'bg-neutral-700'"/>
+            <input type="checkbox" :checked="packet.selected" @change="togglePacket(packet)" class="aspect-square w-[26px] h-[26px] mb-1 rounded-full cursor-pointer appearance-none border-2 border-red-700 transition-colors duration-200" :class="packet.selected ? 'bg-red-700' : 'bg-neutral-700'"/>
           </div>
         </div>
       </div>
@@ -328,9 +328,9 @@ function togglePacket(packet: { name: string, selected: boolean }) {
             <div>
               <p class="text-neutral-200">Durata</p>
               <div class="flex items-center">
-                <IconPlusCircle class="inline w-6 h-6 mr-3 fill-neutral-200" @click="changeDuration(1)"/>
+                <IconPlusCircle class="inline w-[26px] h-[26px] mr-3 fill-neutral-200" @click="changeDuration(1)"/>
                 <p class="text-neutral-200 text-xl pt-1">{{ duration }}</p>
-                <IconMinusCircle class="inline w-6 h-6 ml-3 fill-neutral-200" @click="changeDuration(-1)"/>
+                <IconMinusCircle class="inline w-[26px] h-[26px] ml-3 fill-neutral-200" @click="changeDuration(-1)"/>
               </div>
             </div>
            <p class="text-neutral-400">minuti</p>
