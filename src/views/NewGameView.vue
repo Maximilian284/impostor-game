@@ -193,7 +193,7 @@ function togglePacket(packet: { name: string, selected: boolean }) {
 <template>
   <div class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800 overflow-hidden">
     <!-- View Title -->
-    <p class="text-red-700 font-extrabold text-6xl mb-16 -mt-7">IMPOSTORE</p>
+    <p class="text-red-700 font-extrabold text-5xl mb-16 -mt-7">NUOVA PARTITA</p>
 
     <!-- Options -->
     <div class="w-[calc(100%-4rem)]">
@@ -213,9 +213,9 @@ function togglePacket(packet: { name: string, selected: boolean }) {
         <IconSpy class="inline w-6 h-6 mr-3 mt-1 fill-neutral-200"/>
         Impostori
         <div class="ml-auto flex items-center text-xl pr-2">
-          <IconPlusCircle class="inline w-[26px] h-[26px] mr-3 fill-neutral-200" @click="changeImpostors(1)"/>
+          <IconMinusCircle class="inline w-[26px] h-[26px] mr-3 fill-neutral-200" @click="changeImpostors(-1)"/>
           <p class="pt-1">{{ impostors }}</p>
-          <IconMinusCircle class="inline w-[26px] h-[26px] ml-3 mr-2 fill-neutral-200" @click="changeImpostors(-1)"/>
+          <IconPlusCircle class="inline w-[26px] h-[26px] ml-3 mr-2 fill-neutral-200" @click="changeImpostors(1)"/>
         </div>
       </button>
 
@@ -225,7 +225,7 @@ function togglePacket(packet: { name: string, selected: boolean }) {
         Suggerimento
         <div class="ml-auto pr-3.5">
           <div class="w-13 h-7 rounded-full relative cursor-pointer transition-colors duration-300" :class="hint ? 'bg-red-500/20' : 'bg-neutral-600'" @click="hint = !hint">
-            <div class="w-5 h-5 rounded-full absolute top-1 transition-all duration-300" :class="hint ? 'bg-red-500 left-[calc(100%-24px)]' : 'bg-neutral-400 left-1'"></div>
+            <div class="w-5 h-5 rounded-full absolute top-1 transition-all duration-300" :class="hint ? 'bg-red-600 left-[calc(100%-24px)]' : 'bg-neutral-400 left-1'"></div>
           </div>
         </div>
       </button>
@@ -251,7 +251,7 @@ function togglePacket(packet: { name: string, selected: boolean }) {
       </button>
 
       <!-- Start Game Button -->
-      <button @click="startGame" class="w-full bg-red-700 text-neutral-200 pt-4 pb-3 mt-10 rounded-2xl text-2xl font-semibold text-center flex items-center justify-center">
+      <button @click="startGame" class="w-full bg-red-700 text-neutral-200 pt-4 pb-3 mt-10 rounded-2xl text-3xl font-semibold text-center flex items-center justify-center">
         <p class="mr-3">Inizia partita</p>
       </button>
     </div>
@@ -259,12 +259,12 @@ function togglePacket(packet: { name: string, selected: boolean }) {
     <!-- Modal Players -->
     <Transition name="slide-up">
       <div v-if="showModal.players" 
-           class="z-10 w-screen h-[calc(100vh-12rem)] absolute bottom-0 left-0 bg-neutral-800 rounded-t-2xl border-t-2 border-neutral-600 flex flex-col transition-transform duration-300 ease-out"
+           class="modal-drag z-10 w-screen h-[calc(100vh-12rem)] absolute bottom-0 left-0 bg-neutral-800 rounded-t-2xl border-t-2 border-neutral-600 flex flex-col transition-transform duration-180"
            @touchstart="onTouchStart"
            @touchmove="onTouchMove"
            @touchend="onTouchEnd"
            @transitionend="handleTransitionEndModal('players')"
-           :style="{ transform: `translateY(${dragTranslateModal.players}px)` }"
+           :style="{ transform: `translateY(${dragTranslateModal.players}px) translateZ(0)` }"
       >
         <div class="shrink-0 flex flex-col items-center">
           <IconPlayers class="inline w-10 h-10 mt-2.5 fill-neutral-200"/>
@@ -289,12 +289,12 @@ function togglePacket(packet: { name: string, selected: boolean }) {
     <!-- Modal Packets -->
     <Transition name="slide-up">
       <div v-if="showModal.packets || isClosingModal.packets" 
-           class="z-10 w-screen h-[calc(100vh-12rem)] absolute bottom-0 left-0 bg-neutral-800 rounded-t-2xl border-t-2 border-neutral-600 flex flex-col transition-transform duration-300 ease-out"
+           class="modal-drag z-10 w-screen h-[calc(100vh-12rem)] absolute bottom-0 left-0 bg-neutral-800 rounded-t-2xl border-t-2 border-neutral-600 flex flex-col transition-transform duration-180"
            @touchstart="onTouchStart"
            @touchmove="onTouchMove"
            @touchend="onTouchEnd"
            @transitionend="handleTransitionEndModal('packets')"
-           :style="{ transform: `translateY(${dragTranslateModal.packets}px)` }"
+           :style="{ transform: `translateY(${dragTranslateModal.packets}px) translateZ(0)` }"
       >
         <div class="shrink-0 flex flex-col items-center">
           <IconCards class="inline w-10 h-10 mt-2.5 fill-neutral-200"/>
@@ -312,12 +312,12 @@ function togglePacket(packet: { name: string, selected: boolean }) {
     <!-- Modal Duration -->
     <Transition name="slide-up">
       <div v-if="showModal.duration || isClosingModal.duration" 
-           class="z-10 w-screen h-[calc(100vh-12rem)] absolute bottom-0 left-0 bg-neutral-800 rounded-t-2xl border-t-2 border-neutral-600 flex flex-col transition-transform duration-300 ease-out"
+           class="modal-drag z-10 w-screen h-[calc(100vh-12rem)] absolute bottom-0 left-0 bg-neutral-800 rounded-t-2xl border-t-2 border-neutral-600 flex flex-col transition-transform duration-180"
            @touchstart="onTouchStart"
            @touchmove="onTouchMove"
            @touchend="onTouchEnd"
            @transitionend="handleTransitionEndModal('duration')"
-           :style="{ transform: `translateY(${dragTranslateModal.duration}px)` }"
+           :style="{ transform: `translateY(${dragTranslateModal.duration}px) translateZ(0)` }"
       >
         <div class="shrink-0 flex flex-col items-center">
           <IconClock class="inline w-10 h-10 mt-2.5 fill-neutral-200"/>
@@ -328,9 +328,9 @@ function togglePacket(packet: { name: string, selected: boolean }) {
             <div>
               <p class="text-neutral-200">Durata</p>
               <div class="flex items-center">
-                <IconPlusCircle class="inline w-[26px] h-[26px] mr-3 fill-neutral-200" @click="changeDuration(1)"/>
+                <IconMinusCircle class="inline w-[26px] h-[26px] mr-3 fill-neutral-200" @click="changeDuration(-1)"/>
                 <p class="text-neutral-200 text-xl pt-1">{{ duration }}</p>
-                <IconMinusCircle class="inline w-[26px] h-[26px] ml-3 fill-neutral-200" @click="changeDuration(-1)"/>
+                <IconPlusCircle class="inline w-[26px] h-[26px] ml-3 fill-neutral-200" @click="changeDuration(1)"/>
               </div>
             </div>
            <p class="text-neutral-400">minuti</p>
@@ -347,7 +347,7 @@ function togglePacket(packet: { name: string, selected: boolean }) {
 <style scoped>
 .slide-up-enter-active,
 .slide-up-leave-active {
-  transition: transform 0.575s ease;
+  transition: transform 0.22s cubic-bezier(0.44, 0.13, 0.48, 0.87);
 }
 .slide-up-enter-from,
 .slide-up-leave-to {
@@ -356,6 +356,12 @@ function togglePacket(packet: { name: string, selected: boolean }) {
 .slide-up-enter-to,
 .slide-up-leave-from {
   transform: translateY(0);
+}
+
+.modal-drag {
+  will-change: transform;
+  touch-action: none;
+  transform: translateZ(0);
 }
 
 button, p {

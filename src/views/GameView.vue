@@ -2,6 +2,8 @@
 import IconArrowUp from '@/components/icons/IconArrowUp.vue'
 import IconClose from '@/components/icons/IconClose.vue'
 import IconHelp from '@/components/icons/IconHelp.vue'
+import IconPlay from '@/components/icons/IconPlay.vue'
+import TimerDigit from '@/components/TimerDigit.vue'
 import { ref, onMounted } from 'vue'
 import { useStore } from '@/stores'
 import { goToPage } from '@/router/navigation'
@@ -192,35 +194,40 @@ function endDrag() {
 
 <template>
   <div>
-    <IconClose class="w-8 h-8 stroke-2 fill-neutral-200 absolute rounded-full border-2 border-neutral-200 mt-6 ml-5 p-0.5" @click="isModalActive = true"/>
-    <IconHelp class="w-8 h-8 fill-neutral-200/20 absolute rounded-full border-2 border-neutral-200/20 mt-6 right-5 p-1"/>
+    <IconClose class="w-8 h-8 stroke-2 fill-neutral-200 absolute rounded-full border-2 border-neutral-200 mt-7 ml-[21px] p-0.5" @click="isModalActive = true"/>
+    <IconHelp class="w-8 h-8 fill-neutral-200/20 absolute rounded-full border-2 border-neutral-200/20 mt-7 right-[21px] p-1"/>
     <div v-if="isDiscussion" class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800 p-6 space-y-6">
-      <h2 v-if="!discussionEnded" class="text-neutral-200 text-4xl font-bold mb-10 text-center">Discussione</h2>
-      <p v-if="!discussionEnded" class="text-neutral-200 text-2xl mb-8">
-        Tempo rimasto: {{ Math.floor(discussionTime / 60) }}:{{ String(discussionTime % 60).padStart(2, '0') }} min
-      </p>
+      <h2 v-if="!discussionEnded" class="text-neutral-200 text-5xl font-bold mb-24 -mt-[12vh] text-center">DISCUSSIONE</h2>
+
+      <div v-if="!discussionEnded" class="flex items-center justify-center mb-12">
+          <TimerDigit :value="Math.floor(discussionTime / 60 / 10)" />
+          <TimerDigit :value="Math.floor(discussionTime / 60) % 10" />
+          <div class="text-6xl font-bold text-red-600 mx-2 mb-3">:</div>
+          <TimerDigit :value="Math.floor((discussionTime % 60) / 10)" />
+          <TimerDigit :value="discussionTime % 10" />
+      </div>
       
-      <div v-if="!discussionEnded" class="w-[calc(100%-4rem)] flex flex-col items-center space-y-4">
-        <button v-if="isTimerStarted" class="w-full bg-red-700 text-neutral-200 pt-4 pb-3 rounded-2xl text-2xl font-semibold" @click="endDiscussion">
+      <div v-if="!discussionEnded" class="w-[calc(100%-7rem)] flex flex-col items-center space-y-4">
+        <button v-if="isTimerStarted" class="min-h-[68px] w-full bg-red-700 text-neutral-200 pt-4 pb-3 rounded-2xl text-3xl font-semibold" @click="endDiscussion">
           Vota!
         </button>
-        <button v-else class="w-full bg-red-700 text-neutral-200 pt-4 pb-3 rounded-2xl text-2xl font-semibold" @click="startDiscussionTimer">
-          Inizia!
+        <button v-else class="flex justify-center w-full bg-red-700 text-neutral-200 pt-4 pb-3 rounded-2xl font-semibold" @click="startDiscussionTimer">
+          <IconPlay class="w-10 h-10 fill-neutral-200"/>
         </button>
       </div>
 
-      <div v-else class="flex flex-col w-[calc(100%-4rem)] items-center space-y-4">
-        <p class="text-neutral-200 text-6xl mb-8 font-bold">Votate!</p>
-        <button class="w-full bg-red-700 text-neutral-200 pt-4 pb-3 rounded-2xl text-2xl font-semibold" @click="replayGame">Rigioca</button>
-        <button class="w-full bg-neutral-600 text-neutral-200 pt-4 pb-3 rounded-2xl text-2xl font-semibold" @click="newGame">Nuova Partita</button>
+      <div v-else class="flex flex-col w-[calc(100%-2.5rem)] items-center space-y-4">
+        <p class="text-neutral-200 text-6xl mb-20 font-bold -mt-[12vh]">VOTATE!</p>
+        <button class="w-full bg-red-700 text-neutral-200 pt-4 pb-3 rounded-2xl text-3xl font-semibold" @click="replayGame">Rigioca</button>
+        <button class="w-full bg-neutral-600 text-neutral-200 pt-4 pb-3 rounded-2xl text-3xl font-semibold" @click="newGame">Nuova Partita</button>
       </div>
     </div>
     <div v-else class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800 p-6 space-y-6">
       <!-- Card -->
-      <h2 class="text-neutral-200 text-4xl font-bold mb-10 text-center">{{ playerList[currentIndex]?.name }}</h2>
+      <h2 class="text-neutral-200 text-4xl font-bold mb-10 mt-6 text-center">{{ playerList[currentIndex]?.name }}</h2>
 
       <div class="relative w-[calc(100%-4rem)] h-[calc(45vh)]">
-        <div class="bg-neutral-700 rounded-4xl shadow-xl w-full h-full flex items-center justify-center text-center text-lg text-neutral-200 pt-10">
+        <div class="bg-neutral-700 rounded-2xl shadow-xl w-full h-full flex items-center justify-center text-center text-lg text-neutral-200 pt-10">
           <div>
             <p :class="['font-bold text-3xl', playerList[currentIndex]?.impostor ? 'text-red-500' : 'text-green-500']">
               {{ playerList[currentIndex]?.impostor ? 'IMPOSTORE' : 'ALLEATO' }}
