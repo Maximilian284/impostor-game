@@ -18,11 +18,11 @@ export const useStore = defineStore('store', () => {
       selected: true,
       items: [
         { word: 'Parco', hint: ['Terra', 'Verde'] },
-        { word: 'Hotel', hint: ['Dormire', 'Sedia'] }, // migliorare dormire
+        { word: 'Hotel', hint: ['Dormire', 'Letto'] }, // migliorare dormire
         { word: 'Cinema', hint: ['Biglietto', 'Rumore'] },
         { word: 'Supermercato', hint: ['Scontrino', 'Zucchero'] },
         { word: 'Mare', hint: ['Costume', 'Medusa'] },
-        { word: 'Museo', hint: ['Sedia', 'Guida'] }, 
+        { word: 'Museo', hint: ['Guida'] }, 
         { word: 'Stazione', hint: ['Partenza', 'Annuncio'] }, // aggiungere parola con annuncio
         { word: 'Aeroporto', hint: ['Partenza', 'Sicurezza'] },
         { word: 'Acquario', hint: ['Vasca', 'Medusa'] },
@@ -43,30 +43,44 @@ export const useStore = defineStore('store', () => {
       ]
     },
     attivita_eventi: {
-      name: 'Attività ed Eventi',
+      name: 'Eventi e Attività',
       selected: false,
       items: [
-        { word: 'Viaggio', hint: ['Valigia', 'Treno'] },
+        { word: 'Viaggio', hint: ['Partenza', 'Biglietto'] },
         { word: 'Festa', hint: ['Musica', 'Torta'] },
-        { word: 'Lavoro', hint: ['Ufficio', 'Colleghi'] },
-        { word: 'Cena', hint: ['Forchetta', 'Ristorante'] },
-        { word: 'Concerto', hint: ['Palco', 'Cantante'] },
-        { word: 'Gara', hint: ['Premio', 'Sfida'] },
-        { word: 'Vacanza', hint: ['Hotel', 'Relax'] },
-        { word: 'Allenamento', hint: ['Palestra', 'Sudore'] },
-        { word: 'Esame', hint: ['Studio', 'Ansia'] },
-        { word: 'Riunione', hint: ['Agenda', 'Parlare'] },
+        { word: 'Cena', hint: ['Scontrino', 'Cibo'] },
+        { word: 'Vacanza', hint: ['Dormire'] }, // completare
         { word: 'Matrimonio', hint: ['Abito', 'Fedi'] },
-        { word: 'Spettacolo', hint: ['Pubblico', 'Applausi'] },
-        { word: 'Lezione', hint: ['Professore', 'Lavagna'] },
-        { word: 'Uscita', hint: ['Amici', 'Sera'] },
-        { word: 'Passeggiata', hint: ['Scarpe', 'Strada'] },
+        { word: 'Passeggiata', hint: ['Terra'] }, // completare
         { word: 'Picnic', hint: ['Coperta', 'Cibo'] },
-        { word: 'Riposo', hint: ['Letto', 'Silenzio'] },
-        { word: 'Colloquio', hint: ['Domande', 'Curriculum'] },
-        { word: 'Spesa', hint: ['Carrello', 'Supermercato'] }
       ]
-    }
+    },
+    tempo_libero: {
+      name: 'Tempo libero',
+      selected: false,
+      items: [
+        { word: 'Concerto', hint: ['Rumore', 'Cantante'] },
+        { word: 'Spettacolo', hint: ['Musica', 'Biglietto'] },
+        { word: 'Film', hint: ['Schermo', 'Pubblico'] },
+        { word: 'Concerto', hint: ['Musica', 'Pubblico'] },
+        { word: 'Teatro', hint: ['Canto', 'Luce'] },
+        { word: 'Mostra', hint: ['Guida', 'Pubblico'] },
+        { word: 'Festival', hint: ['Musica', 'Luce'] },
+      ]
+    },
+    natura: {
+      name: 'Natura',
+      selected: false,
+      items: [
+        { word: 'Montagna', hint: ['Freddo', 'Animale'] },
+        { word: 'Foresta', hint: ['Verde', 'Animale'] },
+        { word: 'Fiume', hint: ['Acqua', 'Pesce'] },
+        { word: 'Campo', hint: ['Erba', 'Terra'] },
+        { word: 'Giardino', hint: ['Terra', 'Verde'] },
+        { word: 'Onda', hint: ['Acqua', 'Suono'] },
+        { word: 'Sabbia', hint: ['Mare', 'Terra'] }
+      ]
+    },
   })
 
   return { packets, currentGame }

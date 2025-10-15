@@ -194,8 +194,8 @@ function endDrag() {
 
 <template>
   <div>
-    <IconClose class="w-8 h-8 stroke-2 fill-neutral-200 absolute rounded-full border-2 border-neutral-200 mt-7 ml-[21px] p-0.5" @click="isModalActive = true"/>
-    <IconHelp class="w-8 h-8 fill-neutral-200/20 absolute rounded-full border-2 border-neutral-200/20 mt-7 right-[21px] p-1"/>
+    <IconClose class="w-9 h-9 stroke-2 fill-neutral-200 absolute rounded-full border-2 border-neutral-200 mt-7 ml-[21px] p-0.5" @click="isModalActive = true"/>
+    <IconHelp class="w-9 h-9 fill-neutral-200/20 absolute rounded-full border-2 border-neutral-200/20 mt-7 right-[21px] p-1"/>
     <div v-if="isDiscussion" class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800 p-6 space-y-6">
       <h2 v-if="!discussionEnded" class="text-neutral-200 text-5xl font-bold mb-24 -mt-[12vh] text-center">DISCUSSIONE</h2>
 
@@ -267,10 +267,10 @@ function endDrag() {
         <div class="relative transform overflow-hidden rounded-2xl text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
           <div class="select-none bg-neutral-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
             <div class="sm:flex sm:items-start">
-              <div class="mx-auto flex size-11 shrink-0 items-center justify-center rounded-full bg-red-300 sm:mx-0 sm:size-10">
-                <IconClose class="w-8 h-8 fill-red-700"/>
+              <div class="mx-auto flex size-11 shrink-0 items-center justify-center rounded-full bg-red-300">
+                <IconClose class="w-8 h-8 fill-red-500"/>
               </div>
-              <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+              <div class="mt-3 text-center">
                 <h3 class="text-2xl font-semibold" id="modal-title">Termina la partita</h3>
                 <div class="mt-2">
                   <p class="text-lg" style="white-space: pre-line">Sei sicuro di voler terminare la partita?</p>
@@ -279,10 +279,10 @@ function endDrag() {
             </div>
           </div>
           <div class="w-full bg-neutral-800 px-6 py-4 pb-5 flex justify-between gap-3">
-            <button type="button" class="flex-1 inline-flex justify-center rounded-lg px-3 py-2 text-lg font-semibold ring-1 ring-inset ring-neutral-200 bg-neutral-200/20" @click="isModalActive = false">
+            <button type="button" class="flex-1 inline-flex justify-center rounded-lg px-3 py-2 text-lg font-semibold ring-2 ring-inset ring-neutral-200 bg-neutral-200/20" @click="isModalActive = false">
               Annulla
             </button>
-            <button type="button" class="flex-1 inline-flex justify-center rounded-lg px-3 py-2 text-lg font-semibold ring-1 ring-inset ring-red-300 text-red-500 bg-red-300/20" @click="goToPage('newGame')">
+            <button type="button" class="flex-1 inline-flex justify-center rounded-lg px-3 py-2 text-lg font-semibold ring-2 ring-inset ring-red-500 text-red-500 bg-red-300/20" @click="goToPage('newGame')">
               Termina
             </button>
           </div>
