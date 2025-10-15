@@ -24,11 +24,10 @@ Prova il gioco direttamente online visitando il sito (si sconsiglia la visualizz
 ## Pacchetti di gioco principali
 Il gioco include diversi pacchetti tematici di parole, ognuno con un set unico di indizi e parole da scoprire:
 
-- **Vita quotidiana**: parole e concetti legati alla routine quotidiana, dagli oggetti domestici alle attività giornaliere.
-- **Attività e Cultura**: termini legati a hobby, eventi culturali e attività ricreative.
-- **Natura**: parole che richiamano elementi naturali, animali e fenomeni ambientali.
-- **Oggetti d’uso comune**: oggetti familiari presenti nella vita di tutti i giorni.
-- **Estate**: parole e frasi associate alla stagione estiva, vacanze e attività all’aperto.
+- **Luoghi**: parole che si riferiscono a luoghi generici pubblici, privati, interni o esterni.
+- **Eventi e Attività**: termini legati a hobby, eventi culturali e momenti della giornata.
+- **Natura**: parole che richiamano elementi naturali e fenomeni ambientali.
+- **Tempo libero**: parole legate ad attività ricreative.
 
 ## Crediti
 Il progetto è stato sviluppato da Massimiliano Prandi con l’uso di tecnologie open source e risorse creative della community.  
