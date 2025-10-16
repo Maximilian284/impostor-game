@@ -13,25 +13,29 @@ const isGoHomeModalActive = ref(false)
 <template>
   <IconClose class="w-9 h-9 stroke-2 fill-neutral-200 absolute rounded-full border-2 border-neutral-200 mt-7 ml-[21px] p-0.5 bg-neutral-200/10" @click="isGoHomeModalActive = true"/>
   
-  <div class="flex flex-col items-center justify-center h-[100vh] w-[100vw] p-8 space-y-12 bg-neutral-800 overscroll-y-auto overflow-y-auto">
-    <h1 class="text-5xl text-red-700 font-bold">COME GIOCARE</h1>
-    <div class="max-w-3xl text-neutral-200 space-y-6">
-      <h2 class="text-3xl font-semibold -mt-2 mb-4">Procedura di gioco</h2>
-      <ol class="list-decimal list-inside space-y-2 text-lg">
-        <li>Inserisci il nome dei giocatori.</li>
-        <li>Scegli il numero di impostori.</li>
-        <li>Attiva/disattiva il suggerimento (permette all'impostore di avere un aiuto per il primo turno).</li>
-        <li>Scegli i pacchetti.</li>
-        <li>Inserisci il tempo di gioco.</li>
-      </ol>
+  <div class="flex flex-col items-center justify-center h-[100vh] w-[100vw] space-y-8 bg-neutral-800 ">
+    <div class="shrink-0 mt-24">
+      <h1 class="text-5xl text-red-700 font-bold">COME GIOCARE</h1>
     </div>
-    <div class="max-w-3xl text-neutral-200 space-y-6">
-      <h2 class="text-3xl font-semibold mb-4">Pacchetti</h2>
-      <ul class="list-disc list-inside space-y-2 text-lg">
-        <li v-for="packet in packets">
-          <strong>{{ packet.name }} ({{ packet.items.length }} parole): </strong>{{ packet.description }}
-        </li>
-      </ul>
+    <div class="flex-1 overscroll-y-auto overflow-y-auto px-8 pt-0 space-y-6">
+      <div class="max-w-3xl text-neutral-200 space-y-6">
+        <h2 class="text-3xl font-semibold mb-4">Procedura di gioco</h2>
+        <ol class="list-decimal list-inside space-y-2 text-lg">
+          <li>Inserisci il nome dei giocatori.</li>
+          <li>Scegli il numero di impostori.</li>
+          <li>Attiva/disattiva il suggerimento (permette all'impostore di avere un aiuto per il primo turno).</li>
+          <li>Scegli i pacchetti.</li>
+          <li>Inserisci il tempo di gioco.</li>
+        </ol>
+      </div>
+      <div class="max-w-3xl text-neutral-200 space-y-6">
+        <h2 class="text-3xl font-semibold mb-4">Pacchetti</h2>
+        <ul class="list-disc list-inside space-y-2 text-lg">
+          <li v-for="packet in packets">
+            <strong>{{ packet.name }} ({{ packet.items.length }} parole): </strong>{{ packet.description }}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 
