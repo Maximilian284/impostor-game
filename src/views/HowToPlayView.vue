@@ -19,18 +19,30 @@ const isGoHomeModalActive = ref(false)
     </div>
     <div class="flex-1 overscroll-y-auto overflow-y-auto px-8 pt-0 space-y-6">
       <div class="max-w-3xl text-neutral-200 space-y-6">
-        <h2 class="text-3xl font-semibold mb-4">Procedura di gioco</h2>
-        <ol class="list-decimal list-inside space-y-2 text-lg">
-          <li>Inserisci il nome dei giocatori.</li>
-          <li>Scegli il numero di impostori.</li>
+        <h2 class="text-3xl font-semibold mb-4">Obiettivo</h2>
+        <p class="text-lg">
+          Il gioco coinvolge <strong class="text-green-500">Alleati</strong> e <strong class="text-red-500">Impostori</strong>. Gli Alleati ricevono la stessa parola segreta, mentre gli Impostori possono ricevere o meno un suggerimento (parola che possono usare al loro primo turno per non essere scoperti subito, il suggerimento facilita il lavoro degli Impostori). L’obiettivo degli Alleati e' identificare gli Impostori, mentre gli Impostori devono confondere gli Alleati senza farsi scoprire.
+        </p>
+      </div>
+      <div class="max-w-3xl text-neutral-200 space-y-6">
+        <h2 class="text-3xl font-semibold mb-4">Preparazione</h2>
+        <ol class="list-decimal list-inside space-y-1 text-lg">
+          <li>Inserisci il nome dei giocatori (minimo 3 giocatori).</li>
+          <li>Scegli il numero di impostori (il numero degli impostori sara' sempre minore del totale dei giocatori).</li>
           <li>Attiva/disattiva il suggerimento (permette all'impostore di avere un aiuto per il primo turno).</li>
-          <li>Scegli i pacchetti.</li>
-          <li>Inserisci il tempo di gioco.</li>
+          <li>Scegli i pacchetti (all'inizio parti con solo un pacchetto, ti consiglio "Luoghi", mano a mano che capite il gioco aggiunti più pacchetti).</li>
+          <li>Inserisci il tempo di gioco (di base i minuti a disposizione saranno pari al numero di giocatori).</li>
         </ol>
       </div>
       <div class="max-w-3xl text-neutral-200 space-y-6">
+        <h2 class="text-3xl font-semibold mb-4">Svolgimento</h2>
+        <p class="text-lg">
+          Il gioco decreta chi iniziera' a giocare (gli Impostori sono esclusi dal primo turno). Il giro dei turni segue l'ordine dei giocatori in senso orario o antiorario (scegliete voi). Ogni giocatore, a turno, dice una parola collegata alla parola segreta (non troppo scontata né troppo discutibile). Il gioco continua fino allo scadere del timer o alla decisione della maggioranza di votare. Se l'Impostore viene scoperto, ha la possibilita' di indovinare la parola segreta, se non la indovina vincono gli Alleati.
+        </p>
+      </div>
+      <div class="max-w-3xl text-neutral-200 space-y-6">
         <h2 class="text-3xl font-semibold mb-4">Pacchetti</h2>
-        <ul class="list-disc list-inside space-y-2 text-lg">
+        <ul class="list-disc list-inside space-y-1 text-lg">
           <li v-for="packet in packets">
             <strong>{{ packet.name }} ({{ packet.items.length }} parole): </strong>{{ packet.description }}
           </li>
@@ -40,8 +52,6 @@ const isGoHomeModalActive = ref(false)
   </div>
 
   <div v-if="isGoHomeModalActive" @touchstart.prevent class="fixed z-30 inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300"></div>
-
-
     <div v-if="isGoHomeModalActive" class="fixed inset-0 z-50 overflow-y-auto text-neutral-200">
       <div class="flex min-h-full items-center justify-center px-8 text-center ">
         <div class="relative transform overflow-hidden rounded-2xl text-left shadow-xl transition-all">

@@ -281,7 +281,7 @@ function togglePacket(packet: { name: string, selected: boolean }) {
         <div class="flex-1 overflow-y-auto px-6">
           <div v-for="(_, index) in players" :key="index" class="bg-neutral-700 rounded-2xl px-6 pt-4 pb-3 mb-4 flex items-center justify-between">
             <div>
-              <p class="text-neutral-200">Giocatore {{ index + 1 }}</p>
+              <p class="text-neutral-400">Giocatore {{ index + 1 }}</p>
               <input v-model="players[index]" type="text" class="bg-neutral-700 text-neutral-200 text-xl rounded-lg mt-1 focus:outline-none" placeholder="Nome"/>
             </div>
            <IconTrash @click="players.length > 3 && players.splice(index, 1)" class="inline w-6 h-6 fill-red-700 mb-1 cursor-pointer"/>
