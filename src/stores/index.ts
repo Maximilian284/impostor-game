@@ -11,10 +11,10 @@ export const useStore = defineStore('store', () => {
     packets: { name: string; items: Array<{ word: string, hint: string[] }> }[],
   }>(null)
 
-  // Example packages with words and hints (only for testing purposes for now)
-  const packets = reactive<Record<string, { name: string, selected: boolean, items: Array<{ word: string, hint: string[] }> }>>({
+  const packets = reactive<Record<string, { name: string, description: string, selected: boolean, items: Array<{ word: string, hint: string[] }> }>>({
     luoghi: {
       name: 'Luoghi',
+      description: 'Include parole relative a posti e ambientazioni.',
       selected: true,
       items: [
         { word: 'Parco', hint: ['Terra', 'Verde'] },
@@ -44,6 +44,7 @@ export const useStore = defineStore('store', () => {
     },
     attivita_eventi: {
       name: 'Eventi e Attività',
+      description: 'Parole riguardanti eventi e attività comuni.',
       selected: false,
       items: [
         { word: 'Viaggio', hint: ['Partenza', 'Biglietto'] },
@@ -57,6 +58,7 @@ export const useStore = defineStore('store', () => {
     },
     tempo_libero: {
       name: 'Tempo libero',
+      description: 'Parole legate al tempo libero e hobby.',
       selected: false,
       items: [
         { word: 'Concerto', hint: ['Rumore', 'Cantante'] },
@@ -70,6 +72,7 @@ export const useStore = defineStore('store', () => {
     },
     natura: {
       name: 'Natura',
+      description: 'Parole che descrivono elementi naturali.',
       selected: false,
       items: [
         { word: 'Montagna', hint: ['Freddo', 'Animale'] },

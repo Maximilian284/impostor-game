@@ -197,7 +197,6 @@ function togglePacket(packet: { name: string, selected: boolean }) {
 
 <template>
   <IconClose class="w-9 h-9 stroke-2 fill-neutral-200 absolute rounded-full border-2 border-neutral-200 mt-7 ml-[21px] p-0.5 bg-neutral-200/10" @click="isGoHomeModalActive = true"/>
-
   <IconHelp class="w-9 h-9 fill-neutral-200 absolute rounded-full border-2 border-neutral-200 mt-7 right-[21px] p-1 bg-neutral-200/10" @click="isHelpModalActive = true"/>
 
   <div class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800 overflow-hidden">
@@ -393,8 +392,8 @@ function togglePacket(packet: { name: string, selected: boolean }) {
                 <h3 class="text-2xl font-semibold" id="modal-title">Aiuto</h3>
                 <div class="mt-2">
                   <p class="text-lg" style="white-space: pre-line">
-                    1 - Inserisci il nome dei giocatori.
-                    2 - Scegli il numero di impostori.
+                    1 - Inserisci il nome dei giocatori.<br>
+                    2 - Scegli il numero di impostori.<br>
                     3 - Attiva/disattiva il suggerimento (permette all'impostore di avere un aiuto per il primo turno).<br>
                     4 - Scegli i pacchetti.<br>
                     5 - Inserisci il tempo di gioco.
