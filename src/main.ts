@@ -14,3 +14,12 @@ app.use(createPinia())
 app.use(router)
 
 app.mount('#app')
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/impostor_game/sw.js')
+      .then((reg) => console.log('Service worker registrato:', reg))
+      .catch((err) => console.error('Errore nel service worker:', err))
+  });
+}
