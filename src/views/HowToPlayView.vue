@@ -17,7 +17,7 @@ const isGoHomeModalActive = ref(false)
     <div class="shrink-0 mt-24">
       <h1 class="text-5xl text-red-700 font-bold">COME GIOCARE</h1>
     </div>
-    <div class="flex-1 overscroll-y-auto overflow-y-auto px-8 pt-0 space-y-6">
+    <div class="flex-1 overscroll-y-auto overflow-y-auto px-8 mb-6 pt-0 space-y-6">
       <div class="max-w-3xl text-neutral-200 space-y-6">
         <h2 class="text-3xl font-semibold mb-4">Obiettivo</h2>
         <p class="text-lg">
