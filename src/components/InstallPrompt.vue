@@ -17,7 +17,6 @@ const appName = 'Impostore'
 
 function dismissPrompt(): void {
   showPrompt.value = false
-  localStorage.setItem('installDismissed', 'true')
 }
 
 function installApp(): void {
@@ -33,8 +32,6 @@ function installApp(): void {
 }
 
 onMounted(() => {
-  if (localStorage.getItem('installDismissed')) return
-
   const isStandalone =
     window.matchMedia('(display-mode: standalone)').matches ||
     // @ts-expect-error: proprietà non standard di iOS Safari
