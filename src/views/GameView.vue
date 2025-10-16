@@ -239,7 +239,7 @@ function endDrag() {
 
     <div v-else class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800 p-6 space-y-6">
       <!-- Card -->
-      <h2 class="text-neutral-200 text-4xl font-bold mb-10 mt-6 text-center">{{ playerList[currentIndex]?.name }}</h2>
+      <h2 class="text-neutral-200 text-4xl font-bold mb-10 mt-14 text-center">{{ playerList[currentIndex]?.name }}</h2>
 
       <div class="relative w-[calc(100%-4rem)] h-[calc(45vh)]">
         <div class="bg-neutral-700 rounded-2xl shadow-xl w-full h-full flex items-center justify-center text-center text-lg text-neutral-200 pt-10">
@@ -327,7 +327,7 @@ function endDrag() {
                     {{ playerList[currentIndex]?.impostor ? hint ? "Sei l'impostore! Usa il suggerimento che ti viene fornito giocare il primo turno senza essere scoperto." : "Sei l'impostore! Ascolta ciò che dicono gli altri giocatori e cerca di non farti scoprire." : "Sei un alleato: non dire parole troppo ovvie o rischierai di far scoprire all'impostore la parola segreta." }}
                   </p>
                   <p v-if="showNextButton && isDiscussion && !discussionEnded" class="text-lg" style="white-space: pre-line">
-                    Usate il tempo a vostra disposizione per capire chi è l'impostore!
+                    Usate il tempo a vostra disposizione per capire chi sia l'impostore!
                   </p>
                   <p v-if="isDiscussion && discussionEnded" class="text-lg" style="white-space: pre-line">
                     Premendo RIGIOCA inizierai una nuova partita con le stesse impostazioni della precedente.
