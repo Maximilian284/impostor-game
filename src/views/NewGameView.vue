@@ -9,12 +9,17 @@ import IconCards from '@/components/icons/IconCards.vue'
 import IconPlusFilledCircle from '@/components/icons/IconPlusFilledCircle.vue'
 import IconTrash from '@/components/icons/IconTrash.vue'
 import IconHint from '@/components/icons/IconHint.vue'
+import IconClose from '@/components/icons/IconClose.vue'
+import IconHelp from '@/components/icons/IconHelp.vue'
 import { ref, watch, reactive, computed } from 'vue'
 import { useStore } from '@/stores'
 import { goToPage } from '@/router/navigation'
 
 const store = useStore()
 const packetsAvailable = store.packets
+
+const isGoHomeModalActive = ref(false)
+const isHelpModalActive = ref(false)
 
 type ModalKeys = 'players' | 'duration' | 'packets'
 
@@ -191,6 +196,10 @@ function togglePacket(packet: { name: string, selected: boolean }) {
 </script>
 
 <template>
+  <IconClose class="w-9 h-9 stroke-2 fill-neutral-200 absolute rounded-full border-2 border-neutral-200 mt-7 ml-[21px] p-0.5 bg-neutral-200/10" @click="isGoHomeModalActive = true"/>
+
+  <IconHelp class="w-9 h-9 fill-neutral-200 absolute rounded-full border-2 border-neutral-200 mt-7 right-[21px] p-1 bg-neutral-200/10" @click="isHelpModalActive = true"/>
+
   <div class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800 overflow-hidden">
     <!-- View Title -->
     <p class="text-red-700 font-extrabold text-5xl mb-16 -mt-7">NUOVA PARTITA</p>
@@ -225,7 +234,7 @@ function togglePacket(packet: { name: string, selected: boolean }) {
         Suggerimento
         <div class="ml-auto pr-3.5">
           <div class="w-13 h-7 rounded-full relative cursor-pointer transition-colors duration-300" :class="hint ? 'bg-red-500/20' : 'bg-neutral-600'" @click="hint = !hint">
-            <div class="w-5 h-5 rounded-full absolute top-1 transition-all duration-300" :class="hint ? 'bg-red-600 left-[calc(100%-24px)]' : 'bg-neutral-400 left-1'"></div>
+            <div class="w-5 h-5 rounded-full absolute top-1 transition-all duration-300" :class="hint ? 'bg-red-700 left-[calc(100%-24px)]' : 'bg-neutral-400 left-1'"></div>
           </div>
         </div>
       </button>
@@ -340,7 +349,68 @@ function togglePacket(packet: { name: string, selected: boolean }) {
     </Transition>
 
     <!-- Backdrop -->
-    <div v-if="isBackdropVisible" @click="closeModalWithBackdrop" @touchmove.prevent class="fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300"></div>
+    <div v-if="isBackdropVisible || isGoHomeModalActive || isHelpModalActive" @click="closeModalWithBackdrop" @touchmove.prevent class="fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300"></div>
+    
+    <!-- Go Home modal -->
+    <div v-if="isGoHomeModalActive" class="fixed inset-0 z-50 overflow-y-auto text-neutral-200">
+      <div class="flex min-h-full items-center justify-center px-8 text-center ">
+        <div class="relative transform overflow-hidden rounded-2xl text-left shadow-xl transition-all">
+          <div class="select-none bg-neutral-800 px-4 pb-4 pt-5">
+            <div>
+              <div class="mx-auto flex size-11 shrink-0 items-center justify-center rounded-full bg-red-200/20">
+                <IconClose class="w-8 h-8 fill-red-500"/>
+              </div>
+              <div class="mt-3 text-center">
+                <h3 class="text-2xl font-semibold" id="modal-title">Torna alla home</h3>
+                <div class="mt-2">
+                  <p class="text-lg" style="white-space: pre-line">Sei sicuro di voler tornare alla home?</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-full bg-neutral-800 px-6 py-4 pb-5 pt-5 flex justify-between gap-3">
+            <button type="button" class="flex-1 inline-flex justify-center rounded-lg px-3 py-2 text-lg font-semibold ring-2 ring-inset ring-neutral-200 bg-neutral-200/10" @click="isGoHomeModalActive = false">
+              Annulla
+            </button>
+            <button type="button" class="flex-1 inline-flex justify-center rounded-lg px-3 py-2 text-lg font-semibold ring-2 ring-inset ring-red-500 text-red-500 bg-red-300/10" @click="goToPage('home')">
+              Home
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <!-- Help modal -->
+    <div v-if="isHelpModalActive" class="fixed inset-0 z-50 w-screen overflow-y-auto text-neutral-200">
+      <div class="flex min-h-full items-center justify-center p-8 text-center ">
+        <div class="relative transform overflow-hidden rounded-2xl text-left shadow-xl transition-all">
+          <div class="select-none bg-neutral-800 px-4 pb-4 pt-5">
+            <div>
+              <div class="mx-auto flex size-11 shrink-0 items-center justify-center rounded-full bg-neutral-200/10">
+                <IconHelp class="w-8 h-8 fill-neutral-200"/>
+              </div>
+              <div class="mt-3 text-center">
+                <h3 class="text-2xl font-semibold" id="modal-title">Aiuto</h3>
+                <div class="mt-2">
+                  <p class="text-lg" style="white-space: pre-line">
+                    1 - Inserisci il nome dei giocatori.
+                    2 - Scegli il numero di impostori.
+                    3 - Attiva/disattiva il suggerimento (permette all'impostore di avere un aiuto per il primo turno).<br>
+                    4 - Scegli i pacchetti.<br>
+                    5 - Inserisci il tempo di gioco.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-neutral-800 px-6 py-4 pb-5 pt-5 flex justify-between gap-3">
+            <button type="button" class="rounded-lg w-full px-3 py-2 text-lg font-semibold ring-2 ring-inset ring-neutral-200 bg-neutral-200/10" @click="isHelpModalActive = false">
+              Chiudi
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -362,11 +432,5 @@ function togglePacket(packet: { name: string, selected: boolean }) {
   will-change: transform;
   touch-action: none;
   transform: translateZ(0);
-}
-
-button, p {
-  user-select: none;               /* standard */
-  -webkit-user-select: none;       /* Safari */
-  -ms-user-select: none;           /* IE/Edge */
 }
 </style>

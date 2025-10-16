@@ -8,7 +8,8 @@ import { ref, onMounted } from 'vue'
 import { useStore } from '@/stores'
 import { goToPage } from '@/router/navigation'
 
-const isModalActive = ref(false)
+const isCloseGameModalActive = ref(false)
+const isHelpModalActive = ref(false)
 
 const currentGame = useStore().currentGame
 
@@ -50,8 +51,6 @@ let timer: number | undefined = undefined
 const discussionEnded = ref(false)
 
 let chosenWord = ref<{ word: string; hint: string[] } | null>(null)
-
-
 
 function initializeGame() {
   if (players.length === 0) return
@@ -204,8 +203,12 @@ function endDrag() {
 
 <template>
   <div>
-    <IconClose class="w-9 h-9 stroke-2 fill-neutral-200 absolute rounded-full border-2 border-neutral-200 mt-7 ml-[21px] p-0.5" @click="isModalActive = true"/>
-    <IconHelp class="w-9 h-9 fill-neutral-200/20 absolute rounded-full border-2 border-neutral-200/20 mt-7 right-[21px] p-1"/>
+    <!-- Close game button -->
+    <IconClose v-if="!discussionEnded" class="w-9 h-9 stroke-2 fill-neutral-200 absolute rounded-full border-2 border-neutral-200 mt-7 ml-[21px] p-0.5 bg-neutral-200/10" @click="isCloseGameModalActive = true"/>
+    
+    <!-- Help button -->
+    <IconHelp class="w-9 h-9 fill-neutral-200 absolute rounded-full border-2 border-neutral-200 mt-7 right-[21px] p-1 bg-neutral-200/10" @click="isHelpModalActive = true"/>
+    
     <div v-if="isDiscussion" class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800 p-6 space-y-6">
       <h2 v-if="!discussionEnded" class="text-neutral-200 text-5xl font-bold mb-4 -mt-[12vh] text-center">DISCUSSIONE</h2>
       <p v-if="!discussionEnded" class="text-neutral-200 font-semibold text-2xl mb-20">Inizia {{ startingPlayer }} </p>
@@ -233,6 +236,7 @@ function endDrag() {
         <button class="w-full bg-neutral-600 text-neutral-200 pt-4 pb-3 rounded-2xl text-3xl font-semibold" @click="newGame">Nuova Partita</button>
       </div>
     </div>
+
     <div v-else class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800 p-6 space-y-6">
       <!-- Card -->
       <h2 class="text-neutral-200 text-4xl font-bold mb-10 mt-6 text-center">{{ playerList[currentIndex]?.name }}</h2>
@@ -272,13 +276,16 @@ function endDrag() {
       </div>
     </div>
 
-    <div v-if="isModalActive" @touchstart.prevent class="fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300"></div>
-    <div v-if="isModalActive" class="fixed inset-0 z-30 w-screen overflow-y-auto text-neutral-200">
-      <div class="flex min-h-full items-center justify-center p-5 text-center sm:p-0">
-        <div class="relative transform overflow-hidden rounded-2xl text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-          <div class="select-none bg-neutral-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-            <div class="sm:flex sm:items-start">
-              <div class="mx-auto flex size-11 shrink-0 items-center justify-center rounded-full bg-red-300">
+    <!-- Modals' backdrop -->
+    <div v-if="isCloseGameModalActive || isHelpModalActive" @touchstart.prevent class="fixed z-30 inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300"></div>
+
+    <!-- Close game modal -->    
+    <div v-if="isCloseGameModalActive" class="fixed inset-0 z-50 overflow-y-auto text-neutral-200">
+      <div class="flex min-h-full items-center justify-center px-8 text-center ">
+        <div class="relative transform overflow-hidden rounded-2xl text-left shadow-xl transition-all">
+          <div class="select-none bg-neutral-800 px-4 pb-4 pt-5">
+            <div>
+              <div class="mx-auto flex size-11 shrink-0 items-center justify-center rounded-full bg-red-200/20">
                 <IconClose class="w-8 h-8 fill-red-500"/>
               </div>
               <div class="mt-3 text-center">
@@ -289,12 +296,50 @@ function endDrag() {
               </div>
             </div>
           </div>
-          <div class="w-full bg-neutral-800 px-6 py-4 pb-5 flex justify-between gap-3">
-            <button type="button" class="flex-1 inline-flex justify-center rounded-lg px-3 py-2 text-lg font-semibold ring-2 ring-inset ring-neutral-200 bg-neutral-200/20" @click="isModalActive = false">
+          <div class="w-full bg-neutral-800 px-6 py-4 pb-5 pt-5 flex justify-between gap-3">
+            <button type="button" class="flex-1 inline-flex justify-center rounded-lg px-3 py-2 text-lg font-semibold ring-2 ring-inset ring-neutral-200 bg-neutral-200/10" @click="isCloseGameModalActive = false">
               Annulla
             </button>
-            <button type="button" class="flex-1 inline-flex justify-center rounded-lg px-3 py-2 text-lg font-semibold ring-2 ring-inset ring-red-500 text-red-500 bg-red-300/20" @click="goToPage('newGame')">
+            <button type="button" class="flex-1 inline-flex justify-center rounded-lg px-3 py-2 text-lg font-semibold ring-2 ring-inset ring-red-500 text-red-500 bg-red-300/10" @click="goToPage('newGame')">
               Termina
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Help modal -->
+    <div v-if="isHelpModalActive" class="fixed inset-0 z-50 w-screen overflow-y-auto text-neutral-200">
+      <div class="flex min-h-full items-center justify-center p-8 text-center ">
+        <div class="relative transform overflow-hidden rounded-2xl text-left shadow-xl transition-all">
+          <div class="select-none bg-neutral-800 px-4 pb-4 pt-5">
+            <div>
+              <div :class="['mx-auto flex size-11 shrink-0 items-center justify-center rounded-full', isDiscussion || !showNextButton ? 'bg-neutral-200/10' : !playerList[currentIndex]?.impostor ? 'bg-green-200/20' : 'bg-red-200/20' ]">
+                <IconHelp :class="['w-8 h-8', isDiscussion || !showNextButton ? 'fill-neutral-200' : !playerList[currentIndex]?.impostor ? 'fill-green-500' : 'fill-red-500' ]"/>
+              </div>
+              <div class="mt-3 text-center">
+                <h3 class="text-2xl font-semibold" id="modal-title">Aiuto</h3>
+                <div class="mt-2">
+                  <p v-if="!showNextButton" class="text-lg" style="white-space: pre-line">
+                    Prima di poterti aiutare devi scoprire la tua carta.
+                  </p>
+                  <p v-if="showNextButton && !isDiscussion" class="text-lg" style="white-space: pre-line">
+                    {{ playerList[currentIndex]?.impostor ? hint ? "Sei l'impostore! Usa il suggerimento che ti viene fornito giocare il primo turno senza essere scoperto." : "Sei l'impostore! Ascolta ciò che dicono gli altri giocatori e cerca di non farti scoprire." : "Sei un alleato: non dire parole troppo ovvie o rischierai di far scoprire all'impostore la parola segreta." }}
+                  </p>
+                  <p v-if="showNextButton && isDiscussion && !discussionEnded" class="text-lg" style="white-space: pre-line">
+                    Usate il tempo a vostra disposizione per capire chi è l'impostore!
+                  </p>
+                  <p v-if="isDiscussion && discussionEnded" class="text-lg" style="white-space: pre-line">
+                    Premendo RIGIOCA inizierai una nuova partita con le stesse impostazioni della precedente.
+                    Premendo NUOVA PARTITA verrai portato alla pagina di creazione di una nuova partita.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-neutral-800 px-6 py-4 pb-5 pt-5 flex justify-between gap-3">
+            <button type="button" class="rounded-lg w-full px-3 py-2 text-lg font-semibold ring-2 ring-inset ring-neutral-200 bg-neutral-200/10" @click="isHelpModalActive = false">
+              Chiudi
             </button>
           </div>
         </div>
