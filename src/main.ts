@@ -21,5 +21,5 @@ if ('serviceWorker' in navigator) {
       .register('/impostor_game/sw.js')
       .then((reg) => console.log('Service worker registrato:', reg))
       .catch((err) => console.error('Errore nel service worker:', err))
-  });
+  })
 }
