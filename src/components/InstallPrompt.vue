@@ -61,17 +61,17 @@ onMounted(() => {
   <transition name="fade">
     <div v-if="showPrompt" class="fixed inset-0 z-40 flex items-center justify-center px-8">
       <div class="bg-neutral-800 rounded-xl shadow-md text-sm text-center px-4 py-4 text-neutral-200 max-w-sm w-full relative" >
-        
+        <p class="text-3xl mb-2">CONSIGLIO</p>
+
         <div v-if="isIOS" class="text-lg">
-          <p class="text-3xl mb-2">CONSIGLIO</p>
           Per un’esperienza migliore, aggiungi <span class="font-semibold">{{ appName }}</span> alla schermata Home.<br>
           Tocca <IconShare class="inline w-6 h-6 align-text-bottom fill-neutral-200" />, poi Altro <IconMore class="inline w-6 h-6 fill-neutral-200" /> e infine <span class="font-semibold">Aggiungi alla schermata Home</span>.
         </div>
 
-        <div v-else-if="isAndroid">
+        <div v-else-if="isAndroid" class="text-lg">
           Installa <span class="font-semibold">{{ appName }}</span> sul tuo dispositivo per un’esperienza completa.<br>
-          <button @click="installApp" class="mt-2 inline-block bg-black text-white text-sm px-4 py-2 rounded-md hover:bg-gray-800 transition">
-            Installa l’app
+          <button type="button" class="rounded-lg w-full px-3 py-2 mt-2 text-lg font-semibold ring-2 ring-inset ring-neutral-200 bg-neutral-200/10" @click="installApp">
+            Installa l'app
           </button>
         </div>
 
