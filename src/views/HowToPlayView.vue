@@ -11,6 +11,7 @@ const isGoHomeModalActive = ref(false)
 </script>
 
 <template>
+  <!-- Exit game button -->
   <IconClose class="w-9 h-9 stroke-2 fill-neutral-200 absolute rounded-full border-2 border-neutral-200 mt-7 ml-[21px] p-0.5 bg-neutral-200/10" @click="isGoHomeModalActive = true"/>
   
   <div class="flex flex-col items-center justify-center h-[100vh] w-[100vw] space-y-8 bg-neutral-800 ">
@@ -51,6 +52,7 @@ const isGoHomeModalActive = ref(false)
     </div>
   </div>
 
+  <!-- Exit how to play modal -->
   <div v-if="isGoHomeModalActive" @touchstart.prevent class="fixed z-30 inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300"></div>
     <div v-if="isGoHomeModalActive" class="fixed inset-0 z-50 overflow-y-auto text-neutral-200">
       <div class="flex min-h-full items-center justify-center px-8 text-center ">

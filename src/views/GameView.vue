@@ -8,12 +8,13 @@ import { ref, onMounted } from 'vue'
 import { useStore } from '@/stores'
 import { goToPage } from '@/router/navigation'
 
+// Modal bools
 const isCloseGameModalActive = ref(false)
 const isHelpModalActive = ref(false)
 
+// Game vars
 const currentGame = useStore().currentGame
-
-const players = currentGame?.players ?? []
+const players = currentGame!.players
 
 onMounted(() => {
   if (!players || players.length === 0) {
@@ -23,11 +24,14 @@ onMounted(() => {
   }
 })
 
+// Extract game vars
 const impostorsCount = currentGame?.impostors ?? 0
 const hint = currentGame?.hint 
 const duration = currentGame?.duration
 const packets = currentGame?.packets
+let chosenWord = ref<{ word: string; hint: string[] } | null>(null)
 
+// Randomize array function
 function shuffleArray<T>(array: T[]): T[] {
   const arr = [...array]
   for (let i = arr.length - 1; i > 0; i--) {
@@ -43,14 +47,12 @@ const currentIndex = ref(0)
 const showNextButton = ref(false)
 const hasDraggedOnce = ref(false)
 
-// Discussion phase logic
+// Discussion phase and timer logic
 const isDiscussion = ref(false)
 const isTimerStarted = ref(false)
 const discussionTime = ref((duration ?? 1) * 60)
 let timer: number | undefined = undefined
 const discussionEnded = ref(false)
-
-let chosenWord = ref<{ word: string; hint: string[] } | null>(null)
 
 function initializeGame() {
   if (players.length === 0) return
@@ -153,6 +155,7 @@ function toggleReveal() {
   }
 }
 
+// Drag logic for modals
 let startY = 0
 let currentY = 0
 
@@ -203,16 +206,19 @@ function endDrag() {
 
 <template>
   <div>
-    <!-- Close game button -->
+    <!-- Exit game button -->
     <IconClose v-if="!discussionEnded" class="w-9 h-9 stroke-2 fill-neutral-200 absolute rounded-full border-2 border-neutral-200 mt-7 ml-[21px] p-0.5 bg-neutral-200/10" @click="isCloseGameModalActive = true"/>
     
     <!-- Help button -->
     <IconHelp class="w-9 h-9 fill-neutral-200 absolute rounded-full border-2 border-neutral-200 mt-7 right-[21px] p-1 bg-neutral-200/10" @click="isHelpModalActive = true"/>
     
+    <!-- Discussion and voting phases -->
     <div v-if="isDiscussion" class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800 p-6 space-y-6">
       <h2 v-if="!discussionEnded" class="text-neutral-200 text-5xl font-bold mb-4 -mt-[12vh] text-center">DISCUSSIONE</h2>
+      <!-- First player to start -->
       <p v-if="!discussionEnded" class="text-neutral-200 font-semibold text-2xl mb-20">Inizia {{ startingPlayer }} </p>
       
+      <!-- Timer -->
       <div v-if="!discussionEnded" class="flex items-center justify-center mb-8">
           <TimerDigit :value="Math.floor(discussionTime / 60 / 10)" />
           <TimerDigit :value="Math.floor(discussionTime / 60) % 10" />
@@ -237,6 +243,7 @@ function endDrag() {
       </div>
     </div>
 
+    <!-- Card revealing phase -->
     <div v-else class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800 p-6 space-y-6">
       <!-- Card -->
       <h2 class="text-neutral-200 text-4xl font-bold mb-10 mt-14 text-center">{{ playerList[currentIndex]?.name }}</h2>
@@ -279,21 +286,19 @@ function endDrag() {
     <!-- Modals' backdrop -->
     <div v-if="isCloseGameModalActive || isHelpModalActive" @touchstart.prevent class="fixed z-30 inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300"></div>
 
-    <!-- Close game modal -->    
+    <!-- Exit game modal -->    
     <div v-if="isCloseGameModalActive" class="fixed inset-0 z-50 overflow-y-auto text-neutral-200">
       <div class="flex min-h-full items-center justify-center px-8 text-center ">
         <div class="relative transform overflow-hidden rounded-2xl text-left shadow-xl transition-all">
           <div class="select-none bg-neutral-800 px-4 pb-4 pt-5">
-            <div>
-              <div class="mx-auto flex size-11 shrink-0 items-center justify-center rounded-full bg-red-200/20">
-                <IconClose class="w-8 h-8 fill-red-500"/>
-              </div>
-              <div class="mt-3 text-center">
-                <h3 class="text-2xl font-semibold" id="modal-title">Termina la partita</h3>
-                <div class="mt-2">
-                  <p class="text-lg" style="white-space: pre-line">Sei sicuro di voler terminare la partita?</p>
-                </div>
-              </div>
+            <div class="mx-auto flex size-11 shrink-0 items-center justify-center rounded-full bg-red-200/20">
+              <IconClose class="w-8 h-8 fill-red-500"/>
+            </div>
+            <div class="mt-3 text-center">
+              <h3 class="text-2xl font-semibold" id="modal-title">Termina la partita</h3>
+              <div class="mt-2">
+                <p class="text-lg" style="white-space: pre-line">Sei sicuro di voler terminare la partita?</p>
+              </div>   
             </div>
           </div>
           <div class="w-full bg-neutral-800 px-6 py-4 pb-5 pt-5 flex justify-between gap-3">
@@ -313,27 +318,25 @@ function endDrag() {
       <div class="flex min-h-full items-center justify-center p-8 text-center ">
         <div class="relative transform overflow-hidden rounded-2xl text-left shadow-xl transition-all">
           <div class="select-none bg-neutral-800 px-4 pb-4 pt-5">
-            <div>
-              <div :class="['mx-auto flex size-11 shrink-0 items-center justify-center rounded-full', isDiscussion || !showNextButton ? 'bg-neutral-200/10' : !playerList[currentIndex]?.impostor ? 'bg-green-200/20' : 'bg-red-200/20' ]">
-                <IconHelp :class="['w-8 h-8', isDiscussion || !showNextButton ? 'fill-neutral-200' : !playerList[currentIndex]?.impostor ? 'fill-green-500' : 'fill-red-500' ]"/>
-              </div>
-              <div class="mt-3 text-center">
-                <h3 class="text-2xl font-semibold" id="modal-title">Aiuto</h3>
-                <div class="mt-2">
-                  <p v-if="!showNextButton" class="text-lg" style="white-space: pre-line">
-                    Prima di poterti aiutare devi scoprire la tua carta.
-                  </p>
-                  <p v-if="showNextButton && !isDiscussion" class="text-lg" style="white-space: pre-line">
-                    {{ playerList[currentIndex]?.impostor ? hint ? "Sei l'impostore! Usa il suggerimento che ti viene fornito giocare il primo turno senza essere scoperto." : "Sei l'impostore! Ascolta ciò che dicono gli altri giocatori e cerca di non farti scoprire." : "Sei un alleato: non dire parole troppo ovvie o rischierai di far scoprire all'impostore la parola segreta." }}
-                  </p>
-                  <p v-if="showNextButton && isDiscussion && !discussionEnded" class="text-lg" style="white-space: pre-line">
-                    Usate il tempo a vostra disposizione per capire chi sia l'impostore!
-                  </p>
-                  <p v-if="isDiscussion && discussionEnded" class="text-lg" style="white-space: pre-line">
-                    Premendo RIGIOCA inizierai una nuova partita con le stesse impostazioni della precedente.
-                    Premendo NUOVA PARTITA verrai portato alla pagina di creazione di una nuova partita.
-                  </p>
-                </div>
+            <div :class="['mx-auto flex size-11 shrink-0 items-center justify-center rounded-full', isDiscussion || !showNextButton ? 'bg-neutral-200/10' : !playerList[currentIndex]?.impostor ? 'bg-green-200/20' : 'bg-red-200/20' ]">
+              <IconHelp :class="['w-8 h-8', isDiscussion || !showNextButton ? 'fill-neutral-200' : !playerList[currentIndex]?.impostor ? 'fill-green-500' : 'fill-red-500' ]"/>
+            </div>
+            <div class="mt-3 text-center">
+              <h3 class="text-2xl font-semibold" id="modal-title">Aiuto</h3>
+              <div class="mt-2">
+                <p v-if="!showNextButton" class="text-lg" style="white-space: pre-line">
+                  Prima di poterti aiutare devi scoprire la tua carta.
+                </p>
+                <p v-if="showNextButton && !isDiscussion" class="text-lg" style="white-space: pre-line">
+                  {{ playerList[currentIndex]?.impostor ? hint ? "Sei l'impostore! Usa il suggerimento che ti viene fornito giocare il primo turno senza essere scoperto." : "Sei l'impostore! Ascolta ciò che dicono gli altri giocatori e cerca di non farti scoprire." : "Sei un alleato: non dire parole troppo ovvie o rischierai di far scoprire all'impostore la parola segreta." }}
+                </p>
+                <p v-if="showNextButton && isDiscussion && !discussionEnded" class="text-lg" style="white-space: pre-line">
+                  Usate il tempo a vostra disposizione per capire chi sia l'impostore!
+                </p>
+                <p v-if="isDiscussion && discussionEnded" class="text-lg" style="white-space: pre-line">
+                  Premendo RIGIOCA inizierai una nuova partita con le stesse impostazioni della precedente.
+                  Premendo NUOVA PARTITA verrai portato alla pagina di creazione di una nuova partita.
+                </p>
               </div>
             </div>
           </div>
