@@ -12,7 +12,7 @@ export default defineConfig({
     vueDevTools(),
     tailwindcss(),
   ],
-  base: '/impostor_game/',
+  base: '/impostor-game/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

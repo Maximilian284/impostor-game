@@ -1,6 +1,6 @@
 {
-  "name": "impostor_game",
-  "version": "0.0.0",
+  "name": "impostor-game",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "engines": {

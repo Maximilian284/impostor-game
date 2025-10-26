@@ -16,7 +16,7 @@ onMounted(() => {
 <template>
   <div v-if="!isMobile" class="flex justify-center items-center h-screen w-screen bg-neutral-800 text-center px-4">
     <p class="text-red-700 font-extrabold text-2xl">
-      L'accesso al gioco non è disponibile da computer. L'app e' pensata esclusivamente per dispositivi mobili.
+      L'accesso al gioco non e' disponibile da computer. L'app e' pensata esclusivamente per dispositivi mobile.
     </p>
   </div>
   <div v-else class="flex flex-col justify-center items-center h-screen w-screen bg-neutral-800">

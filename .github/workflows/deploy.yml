@@ -30,5 +30,5 @@ jobs:
           branch: master               # branch della repo Pages
           folder: dist                # cartella che contiene i file buildati
           repository-name: Maximilian284/Maximilian284.github.io
-          target-folder: impostor_game
+          target-folder: impostor-game
           token: ${{ secrets.GH_PAGES_TOKEN }}
