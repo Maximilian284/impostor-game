@@ -11,7 +11,7 @@ Il **Gioco dell'Impostore** è l'ennesima gioco dell’impostore, basata su paro
 
 ## Gioca subito!
 Prova il gioco direttamente online visitando il sito (si sconsiglia la visualizzazione su PC):  
-[https://maximilian284.github.io/impostor_game](https://maximilian284.github.io/impostor_game)
+[https://maximilian284.github.io/impostor-game](https://maximilian284.github.io/impostor-game)
 
 ## Come si gioca
 1. Avvia una partita dal menu principale.
